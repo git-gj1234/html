@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 29, 2023 at 11:33 AM
+-- Generation Time: Jan 29, 2023 at 01:31 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -195,7 +195,7 @@ CREATE TABLE `users` (
   `Locality` varchar(50) DEFAULT NULL,
   `phone_number` bigint(20) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `password` int(11) DEFAULT NULL
+  `password` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -203,9 +203,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`UID`, `User_name`, `House_no`, `street_building`, `Locality`, `phone_number`, `email`, `password`) VALUES
-(1, 'Adithya', '4', 'aq1', 'jpnagar', 7818239203, 'a@gmail.com', 102345),
-(2, 'Amal', '6', 'we4', 'Basvanagudi', 2135829032, 'am@gmail.com', 123456),
-(3, 'chetna', '9', 'cdr5', 'this locality', 3853298567, 'c@gmail.com', 456246);
+(1, 'Adithya', '4', 'aq1', 'jpnagar', 7818239203, 'a@gmail.com', '102345'),
+(2, 'Amal', '6', 'we4', 'Basvanagudi', 2135829032, 'am@gmail.com', '123456'),
+(3, 'chetna', '9', 'cdr5', 'this locality', 3853298567, 'c@gmail.com', '456246');
 
 -- --------------------------------------------------------
 

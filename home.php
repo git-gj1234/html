@@ -5,7 +5,12 @@
 
 </head>
 <body>
-  
+<div class = "a1">
+        hello
+    <img src="images/apple.jpg" class="im">
+    hello this is the nav bar
+    </div>
+
 <?php
 $host = "localhost";
 $user = "root";
@@ -17,47 +22,70 @@ if(!$conn){
 }
 echo 'Connected successfully<br>';
 
+$sql0 = "SELECT distinct(category) from STORE_INV"; 
+$retval0 = mysqli_query($conn,$sql0);
 
-//mysqli_close($conn);
-/*
-$sql = "CREATE DATABASE t";
-if(mysqli_query($conn,$sql)){
-    echo "Database Created successfully";
+
+if(mysqli_num_rows($retval0)>0){
+    echo "<div class=\"flex-container\">";
+    while($row0 = mysqli_fetch_assoc($retval0)){
+        echo "<div>";
+        $v0 = $row0['category'];
+        echo"<input type = \"submit\" value = \"$v0\" fdprocessedid=\"3skxvl\">";
+        echo "</div>";    
+    }
+    echo "</div>";
 }
-else echo "Failed".mysqli_error($conn);
-mysqli_close($conn);
-*/
-
-/*
-$sql = "CREATE TABLE t1(slno int primary key,fruit varchar(20),link varchar(100));";
-mysqli_query($conn,$sql);
-*/
-
-
 $sql = "SELECT * from STORE_INV";
 $retval = mysqli_query($conn,$sql);
-// echo"<table border = 1><tr><th>\"items\"</td><td>\"img\"</td></tr>";
 
 if(mysqli_num_rows($retval)>0){
     echo "<div class=\"flex-container2\">";
     while($row = mysqli_fetch_assoc($retval)){
-        echo "<div>";
-        echo"<p class = \"para\">{$row['Name']}</p><br>";
-        echo"<hr>";
+        echo "<div class=\"item\">";
+        // echo"<p class = \"para\">{$row['Name']}</p><br>";
+        // echo"<hr>";
+        // $link = $row['link'];
+        // echo"<img src=$link class = \"app\">";
+        // echo"<br>";
+        // echo"<hr>";
+        // $supporting_info = $row['info'];
+        // echo"$supporting_info";
+
+
+        echo "<table class = \"gallery\">";
+        echo "<tr class = \"tr\">";
+        echo "<td colspan=\"2\" class=\"tr\">";
         $link = $row['link'];
-        echo"<img src=$link class = \"app\">";
-        echo"<br>";
-        echo"<hr>";
+        echo "<img src=$link class = \"app\" height = \"200\" width = \"200\">";
+        echo "</td>";
+        echo "</tr>";
+        echo "<tr class=\"tr\">";
+        echo "<td colspan=\"2\" class=\"tr\">";
+        echo "<p class = \"elementname\">{$row['Name']}</p>";
+        echo "</td>";
+        echo "</tr>";
+        echo "<tr class=\"tr\">";
+        echo "<td class=\"tr\">";
+        echo "<p class=\"price\">&#x20B9 36</p>";
+        echo "</td>";
+        echo "<td class=\"tr\">";
+        echo "<input type=\"add\" value=\"ADD\">";
+        echo "</td>";
+        echo "</tr>";
+        echo "<tr class=\"tr\">";
+        echo "<td colspan=\"2\" class=\"tr\">";
         $supporting_info = $row['info'];
-        echo"$supporting_info";
-        // echo "<div>{$row['Name']}";
-        
-        // echo "<img src= $link height =\"100px\"></div>";
+        echo "<p class=\"price\">$supporting_info</p>";
+        echo "</td>";
+        echo "</tr>";
+        echo "</table>";
         echo "</div>";
     
     }
     echo "</div>";
 }
+
 mysqli_close($conn);
 ?>
 
