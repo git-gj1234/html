@@ -5,6 +5,7 @@
 
 </head>
 <body>
+  
 <?php
 $host = "localhost";
 $user = "root";
@@ -35,15 +36,29 @@ mysqli_query($conn,$sql);
 
 $sql = "SELECT * from STORE_INV";
 $retval = mysqli_query($conn,$sql);
-echo"<table border = 1><tr><th>\"items\"</td><td>\"img\"</td></tr>";
+// echo"<table border = 1><tr><th>\"items\"</td><td>\"img\"</td></tr>";
+
 if(mysqli_num_rows($retval)>0){
+    echo "<div class=\"flex-container2\">";
     while($row = mysqli_fetch_assoc($retval)){
-        echo "<tr><td>{$row['Name']}</td>";
+        echo "<div>";
+        echo"<p class = \"para\">{$row['Name']}</p><br>";
+        echo"<hr>";
         $link = $row['link'];
-        echo "<td><img src= $link height =\"100px\"></td></tr>";
+        echo"<img src=$link class = \"app\">";
+        echo"<br>";
+        echo"<hr>";
+        $supporting_info = $row['info'];
+        echo"$supporting_info";
+        // echo "<div>{$row['Name']}";
+        
+        // echo "<img src= $link height =\"100px\"></div>";
+        echo "</div>";
     
     }
+    echo "</div>";
 }
 mysqli_close($conn);
 ?>
+
 </body>
