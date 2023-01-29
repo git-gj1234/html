@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<title>valmart</title>
+<head class = "a1">
+    <link rel="stylesheet" type="text/css" href = "home.css">
+
+</head>
+<body>
 <?php
 $host = "localhost";
 $user = "root";
@@ -39,3 +46,4 @@ if(mysqli_num_rows($retval)>0){
 }
 mysqli_close($conn);
 ?>
+</body>
