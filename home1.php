@@ -1,12 +1,35 @@
+<!DOCTYPE html>
+<title>valmart</title>
+<head class = "a1">
+    <link rel="stylesheet" type="text/css" href = "home1.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+</head>
+<body>
+<div class = "a1">
+        hello
+    <img src="images/apple.jpg" class="im">
+    hello this is the nav bar
+    <div id="search-container">
+    <form method="post">
+      <input type="text" id="search-input" name = "search" value = "<?php if(isset($_POST['search'])) echo htmlspecialchars($_POST['search'])?>" >
+      <button type="submit" name="btn" id="search-button">Search</button>
+    </form>
+  </div>
+</div>
+
+
 <?php 
 session_start();
 $P = $_SESSION;
-echo $P['UID'];
+// echo $P['UID'];
 session_write_close();
 ?>
 
 <?php
-
+$r=0;
 $host = "localhost";
 $user = "root";
 $pass = "";
@@ -15,12 +38,50 @@ $conn = mysqli_connect($host,$user,$pass,$database);
 if(!$conn){
     die('Could not connect: '.mysqli_connect_error());
 }
-echo 'Connected successfully<br>';    
+$sql0 = "SELECT distinct(category) from STORE_INV"; 
+$retval0 = mysqli_query($conn,$sql0);
+
+
+if(mysqli_num_rows($retval0)>0){
+    echo "<div class=\"flex-container\">";
+    while($row0 = mysqli_fetch_assoc($retval0)){
+        echo "<div>";
+        $v0 = $row0['category'];
+        ?>
+        <form method = "post">
+        <input type = "submit" value = <?php echo"'$v0'"?> name = <?php echo "'$v0'"?> >
+        </form>
+        <?php
+        echo "</div>";    
+    }
+    echo "</div>";
+}
+
+if($_POST && isset($_POST["canned"])){
+    // echo "canned boissss";
+    // echo "canned boissss";
+    // echo "canned boissss";
+    // echo "canned boissss";
+    // echo "canned boissss";
+    // echo "canned boissss";
+    // echo "canned boissss";
+    // echo "canned boissss";
+    // echo "canned boissss";
+    // echo "canned boissss";
+    // echo "canned boissss";
+    // echo "canned boissss";
+    // echo "canned boissss";
+    // echo "canned boissss";
+    // echo "canned boissss";
+    // echo "canned boissss";echo "canned boissss";
+    // echo "canned boissss";
+}
+// echo 'Connected successfully<br>';    
 
   if($_POST && isset($_POST['search']))
   {
         $value_filter= $_POST['search'];
-        echo $value_filter;
+        // echo $value_filter;
 
         $query = "Select * from store_inv where concat(Name) LIKE '%$value_filter%'";
         $retval = mysqli_query($conn,$query);
@@ -73,34 +134,143 @@ if(mysqli_num_rows($retval)>0){
     }
     echo "</div>";
 }
+else{
+    echo "<img src = \"images/no_res.png\" align = \"center\">";
+    echo "<br><p align = \"center\">we dont seem to offer $value_filter at the moment</p>";
 }
+}
+else{
+
+    $sql0 = "SELECT distinct(category) from STORE_INV"; 
+    $retval0 = mysqli_query($conn,$sql0); 
+    $r = 0;   
+    while($row0 = mysqli_fetch_assoc($retval0)){
+        $v1 = $row0['category'];
+        // echo "$v1";
+        if(isset($_POST["$v1"])){
+            // echo"ye boiiiiiiii";
+            $r = 1;
+            $sql = "SELECT * from STORE_INV where category = '$v1'";
+$retval = mysqli_query($conn,$sql);
+if(mysqli_num_rows($retval)>0){
+    echo "<div class=\"flex-container2\">";
+    while($row = mysqli_fetch_assoc($retval)){
+        echo "<div class=\"item\">";
+        // echo"<p class = \"para\">{$row['Name']}</p><br>";
+        // echo"<hr>";
+        // $link = $row['link'];
+        // echo"<img src=$link class = \"app\">";
+        // echo"<br>";
+        // echo"<hr>";
+        // $supporting_info = $row['info'];
+        // echo"$supporting_info";
+
+
+        echo "<table class = \"gallery\">";
+        echo "<tr class = \"tr\" style=\"height:250px;\" >";
+        echo "<td colspan=\"2\" class=\"tr\">";
+        $link = $row['link'];
+        echo "<img src=$link >";
+        echo "</td>";
+        echo "</tr>";
+        echo "<tr class=\"tr\">";
+        echo "<td colspan=\"2\" class=\"tr\">";
+        echo "<p class = \"elementname\">{$row['Name']}</p>";
+        echo "</td>";
+        echo "</tr>";
+        echo "<tr class=\"tr\">";
+        echo "<td class=\"tr\">";
+        $price = $row['price'];
+        echo "<p class=\"price\">$price</p>";
+        echo "</td>";
+        echo "<td class=\"tr\" >";
+        echo "<input type=\"add\" value=\"+\">";
+        /*echo "<input type=\"add\" value=\"-\">";*/
+        echo "</td>";
+        echo "</tr>";
+        echo "<tr class=\"tr\">";
+        echo "<td colspan=\"2\" class=\"tr\">";
+        $supporting_info = $row['info'];
+        echo "<p class=\"content\">$supporting_info</p>";
+        echo "</td>";
+        echo "</tr>";
+        echo "</table>";
+        echo "</div>";
+    
+    }
+    echo "</div>";
+}
+}
+        }
+
+        if(!$r){
+            $sql = "SELECT * from STORE_INV";
+        $retval = mysqli_query($conn,$sql);
+        
+        if(mysqli_num_rows($retval)>0){
+            echo "<div class=\"flex-container2\">";
+            while($row = mysqli_fetch_assoc($retval)){
+                echo "<div class=\"item\">";
+                // echo"<p class = \"para\">{$row['Name']}</p><br>";
+                // echo"<hr>";
+                // $link = $row['link'];
+                // echo"<img src=$link class = \"app\">";
+                // echo"<br>";
+                // echo"<hr>";
+                // $supporting_info = $row['info'];
+                // echo"$supporting_info";
+        
+        
+                echo "<table class = \"gallery\">";
+                echo "<tr class = \"tr\" style=\"height:250px;\" >";
+                echo "<td colspan=\"2\" class=\"tr\">";
+                $link = $row['link'];
+                echo "<img src=$link >";
+                echo "</td>";
+                echo "</tr>";
+                echo "<tr class=\"tr\">";
+                echo "<td colspan=\"2\" class=\"tr\">";
+                echo "<p class = \"elementname\">{$row['Name']}</p>";
+                echo "</td>";
+                echo "</tr>";
+                echo "<tr class=\"tr\">";
+                echo "<td class=\"tr\">";
+                $price = $row['price'];
+                echo "<p class=\"price\">$price</p>";
+                echo "</td>";
+                echo "<td class=\"tr\" >";
+                echo "<input type=\"add\" value=\"+\">";
+                /*echo "<input type=\"add\" value=\"-\">";*/
+                echo "</td>";
+                echo "</tr>";
+                echo "<tr class=\"tr\">";
+                echo "<td colspan=\"2\" class=\"tr\">";
+                $supporting_info = $row['info'];
+                echo "<p class=\"content\">$supporting_info</p>";
+                echo "</td>";
+                echo "</tr>";
+                echo "</table>";
+                echo "</div>";
+            
+            }
+            echo "</div>";
+        }
+        }
+
+
+
+    }
+
+
+
+
+
+
 
 mysqli_close($conn);
 ?>
 
-
-<!DOCTYPE html>
-<title>valmart</title>
-<head class = "a1">
-    <link rel="stylesheet" type="text/css" href = "home1.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-
-</head>
-<body>
-<div class = "a1">
-        hello
-    <img src="images/apple.jpg" class="im">
-    hello this is the nav bar
-    <div id="search-container">
-    <form method="post">
-      <input type="text" id="search-input" name = "search" value = "<?php if(isset($_POST['search'])) echo htmlspecialchars($_POST['search'])?>" >
-      <button type="submit" name="btn" id="search-button">Search</button>
-    </form>
-  </div>
-</div>
-
+<br>
 <footer id="footer">
 
 <div id="nav-container">
