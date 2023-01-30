@@ -70,7 +70,8 @@ if(mysqli_num_rows($retval)>0){
         echo "</tr>";
         echo "<tr class=\"tr\">";
         echo "<td class=\"tr\">";
-        echo "<p class=\"price\">&#x20B9 36</p>";
+        $price = $row['price'];
+        echo "<p class=\"price\">$price</p>";
         echo "</td>";
         echo "<td class=\"tr\" >";
         echo "<input type=\"add\" value=\"+\">";
