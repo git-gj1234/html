@@ -54,10 +54,10 @@ if(mysqli_num_rows($retval)>0){
 
 
         echo "<table class = \"gallery\">";
-        echo "<tr class = \"tr\">";
+        echo "<tr class = \"tr\" style=\"height:250px;\" >";
         echo "<td colspan=\"2\" class=\"tr\">";
         $link = $row['link'];
-        echo "<img src=$link class = \"app\" height = \"200\" width = \"200\">";
+        echo "<img src=$link >";
         echo "</td>";
         echo "</tr>";
         echo "<tr class=\"tr\">";
@@ -69,14 +69,15 @@ if(mysqli_num_rows($retval)>0){
         echo "<td class=\"tr\">";
         echo "<p class=\"price\">&#x20B9 36</p>";
         echo "</td>";
-        echo "<td class=\"tr\">";
-        echo "<input type=\"add\" value=\"ADD\">";
+        echo "<td class=\"tr\" >";
+        echo "<input type=\"add\" value=\"+\">";
+        /*echo "<input type=\"add\" value=\"-\">";*/
         echo "</td>";
         echo "</tr>";
         echo "<tr class=\"tr\">";
         echo "<td colspan=\"2\" class=\"tr\">";
         $supporting_info = $row['info'];
-        echo "<p class=\"price\">$supporting_info</p>";
+        echo "<p class=\"content\">$supporting_info</p>";
         echo "</td>";
         echo "</tr>";
         echo "</table>";
