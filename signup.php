@@ -1,72 +1,38 @@
-<html>
-    <head>
-        <link rel="stylesheet" href="signup.css">
-    </head>
-    <body>
-        <div class="center" >
-            <h1>Sign Up</h1>
-            
-        
-            <form method="post">
-                
-                <table width="100%" >
-                <tr><td>
-                <div class="type1">
-                    <input type="text" required>
-                    <span></span>
-                    <label>Choose a Username</label>
-                </div>
-                <div class="type1">
-                    <input type="password" required>
-                    <span></span>
-                    <label>Create Password</label>
-                </div>
-                <div class="type1">
-                    <input type="password" required>
-                    <span></span>
-                    <label>Confirm Password</label>
-                </div>
-                <div class="type1">
-                    <input type="text" required>
-                    <span></span>
-                    <label>Phone Number</label>
-                </div>
-                </td>
-                <td>
+<?
 
-               
-                <div class="type1">
-                    <input type="text" required>
-                    <span></span>
-                    <label>Address Line 1</label>
-                </div>
-                <div class="type1">
-                    <input type="text" required>
-                    <span></span>
-                    <label>Address Line 2</label>
-                </div>
-                <div class="type1">
-                    <input type="text" required>
-                    <span></span>
-                    <label>Address Line 3</label>
-                </div>
-                
-                <div class="type1">
-                    <input type="text" required>
-                    <span></span>
-                    <label>Email</label>
-                </div>
-                </td>
-            </tr>
-            </table>
-                
-                    <input type="submit" value="Sign Up">
-                
-            
-                
-            </form>
-        </table>
-        </div>
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $l1 = $_POST['l1'];
+    $l2 = $_POST['l2'];
+    $l3 = $_POST['l3'];
+    $phno = $_POST['phno'];
+
+    $conn=new mysqli('localhost','root','','store');
     
-    </body>
-</html>
+  $stmt = $conn->prepare('SELECT MAX(UID) + 1 AS next_id FROM users');
+  $stmt->execute();
+  $row = $stmt->fetch();
+  $nextId = $row['next_id'];
+
+    
+    if ($conn->connect_error){
+        die('connection failed : '.$conn->connect_error);
+
+    }
+    else{
+        $stmt = $conn->prepare('INSERT INTO users (UID, User_name, House_no, street_building, Locality,phone_number,email, password) VALUES (?, ?, ?, ?, ?, ?, ?, ? )');
+        $stmt->bindParam($nextId,$username, $l1,$l2,$l3,$phno,$email,$password);
+        $stmt->execute();
+        echo "registration successful";
+        $stmt->close();
+        $conn->close();
+    }
+
+    header('Location: home.php');
+    exit;
+
+}
+?
+>

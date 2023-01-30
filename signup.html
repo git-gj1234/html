@@ -1,0 +1,91 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="signup.css">
+    </head>
+    <body>
+        <div class="center" >
+            <h1>Sign Up</h1>
+            
+        
+            <form method="post" action="signup.php">
+                
+                <table width="100%" >
+                <tr><td>
+                <div class="type1">
+                    <input type="text" name="name" required>
+                    <span></span>
+                    <label>Choose a Username</label>
+                </div>
+                <div class="type1">
+                    <input type="password" name="password" required>
+                    <span></span>
+                    <label>Create Password</label>
+                </div>
+                <div class="type1">
+                    <input type="password"  name="confirm-password" required>
+                    <span></span>
+                    <label>Confirm Password</label>
+                </div>
+                <div class="type1">
+                    <input type="text" name="phno" required>
+                    <span></span>
+                    <label>Phone Number</label>
+                </div>
+                </td>
+                <td>
+
+               
+                <div class="type1">
+                    <input type="text" name="l1" required>
+                    <span></span>
+                    <label>Address Line 1</label>
+                </div>
+                <div class="type1">
+                    <input type="text" name="l2" required>
+                    <span></span>
+                    <label>Address Line 2</label>
+                </div>
+                <div class="type1">
+                    <input type="text" name="l3" required>
+                    <span></span>
+                    <label>Address Line 3</label>
+                </div>
+                
+                <div class="type1">
+                    <input type="text" name="email" required>
+                    <span></span>
+                    <label>Email</label>
+                </div>
+                </td>
+            </tr>
+            </table>
+                
+                    <input type="submit" value="Sign Up">
+                
+            
+                
+            </form>
+        </table>
+        </div>
+
+        <script>
+            const form = document.querySelector('#signup-form');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const password = form.querySelector('#password').value;
+  const confirmPassword = form.querySelector('#confirm-password').value;
+
+
+  if (password !== confirmPassword) {
+    alert('Passwords do not match');
+    return;
+  }
+
+  // send data to the server (using ajax or fetch)
+});
+        </script>
+    
+    </body>
+</html>
