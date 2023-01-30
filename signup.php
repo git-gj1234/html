@@ -32,7 +32,7 @@ if($_POST && isset($_POST['name'],$_POST['password'],$_POST['email'],$_POST['pho
         $sql = "INSERT into users values($v1,'$name','$ad1','$ad2','$ad3','$phone','$email','$password')";
         $retval = mysqli_query($conn,$sql);
         
-        header("Location: https://localhost/junk/html/login.html");
+        header("Location: https://localhost/recent/html/login.php");
     }
     }
     echo'<script>function validate(){alert("procceding to login page");return true;}</script>';

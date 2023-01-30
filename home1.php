@@ -1,3 +1,10 @@
+<?php 
+session_start();
+$P = $_SESSION;
+echo $P['UID'];
+session_write_close();
+?>
+
 <?php
 
 $host = "localhost";
