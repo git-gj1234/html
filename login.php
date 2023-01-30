@@ -54,7 +54,7 @@ if($_POST && isset($_POST['name'],$_POST['password'])) {
                 <div class="pass">Forgot Password?</div>
                 <input type="submit" value="Login">
                 <div class="signup">
-                    Not a member? <a href="signup.html">Signup</a>
+                    Not a member? <a href="signup.php">Signup</a>
                 </div>
             </form>
         </div>
