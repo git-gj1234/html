@@ -84,7 +84,7 @@ $retval0 = mysqli_query($conn,$sql0);
 if(mysqli_num_rows($retval0)>0){
     echo "<div class=\"flex-container\">";
     while($row0 = mysqli_fetch_assoc($retval0)){
-        echo "<div>";
+        echo "<div class=\"categ\">";
         $v0 = $row0['category'];
         ?>
         <form method = "post">
@@ -110,13 +110,16 @@ if($_POST && isset($_POST["canned"])){
 if(mysqli_num_rows($retval)>0){
     
     display($retval);
-    echo "<div class=\"printend\">";
-        echo "<p>END OF SEARCH RESULTS<p>";
-        echo" </div>";
+    echo "<div class=\"end-results\">";
+  echo "<img src=\"images/smile.jpg\" alt=\"Grocery basket\">";
+  echo "<p>End of search results</p>";
+echo "</div>";
 }
 else{
-    echo "<img src = \"images/no_res.png\" align = \"center\">";
-    echo "<br><p align = \"center\">we dont seem to offer $value_filter at the moment</p>";
+    echo "<div class=\"end-results\">";
+  echo "<img src=\"images/no_res.png\" alt=\"Grocery basket\">";
+  echo "<p>we dont seem to offer $value_filter at the moment</p>";
+  echo "</div>";
 }
 $sql = "SELECT * from STORE_INV";
             $retval = mysqli_query($conn,$sql);
@@ -143,9 +146,10 @@ $retval = mysqli_query($conn,$sql);
 if(mysqli_num_rows($retval)>0){
     
     display($retval);
-    echo "<div class=\"printend\">";
-        echo "<p>END OF SEARCH RESULTS<p>";
-        echo" </div>";
+    echo "<div class=\"end-results\">";
+  echo "<img src=\"images/smile.jpg\" alt=\"Grocery basket\">";
+  echo "<p>End of search results</p>";
+  echo "</div>";
 
 }
 }
@@ -171,13 +175,12 @@ if(mysqli_num_rows($retval)>0){
 
 
 
-mysqli_close($conn);
+    mysqli_close($conn);
 ?>
 
-<br>
 <footer id="footer">
 
-<div id="nav-container">
+    <div id="nav-container">
     <button class="contact" id="nav-button">Contact Us</button>
     <div id="nav-content">
         <table style="width:100%;">
@@ -192,21 +195,21 @@ mysqli_close($conn);
 
             <tr>
                 <td style="width:40%; ">
-                    <ul>
-                        <li>
+                    <ul style="background: #388697;">
+                        <li style="background: #388697;">
                             No Return policy is followed here.
                         </li>
-                        <li>
+                        <li style="background: #388697;">
                             Only Amal, Chetna and GJ hold the rights to change anything here.
                         </li>
-                        <li>
+                        <li style="background: #388697;">
                             Sir give full maks plzzzz. You are not welcome to use our website.
                         </li>
                     </ul>
                 </td>
                 <td style="width:20%;">
                     <p>
-                        <p style="font-size:14px"><b>Customer Service : </b></p>
+                        <p style="font-size:14px background: #388697; font-weight:bold;">Customer Service : </p>
                         <br>
                         <span class="material-symbols-outlined">
                             mail
@@ -219,7 +222,7 @@ mysqli_close($conn);
                 </td>
                 <td style="width:20%;">
                     <p>
-                        <p style="font-size:14px"><b>Delivery Service : </b></p>
+                        <p style="font-size:14px; background: #388697; font-weight:bold;">Delivery Service : </p>
                         <br>
                         <span class="material-symbols-outlined">
                             mail
@@ -232,7 +235,7 @@ mysqli_close($conn);
                 </td>
                 <td style="width:20%;">
                     <p>
-                        <p style="font-size:14px"><b>Helpline : </b></p>
+                        <p style="font-size:14px; background: #388697; font-weight:bold;">Helpline : </p>
                         <br>
                         <span class="material-symbols-outlined">
                             mail
@@ -268,26 +271,27 @@ mysqli_close($conn);
     </div>
   </div>
 </footer>
-  <script>
-  const button = document.querySelector("#nav-button");
-const content = document.querySelector("#nav-content");
-const footer = document.getElementById("footer");
 
-window.onscroll = function() {
+<script>
+    const button = document.querySelector("#nav-button");
+    const content = document.querySelector("#nav-content");
+    const footer = document.getElementById("footer");
+
+    window.onscroll = function() {
   if (window.pageYOffset > 50) {
     footer.style.bottom = "0";
   } else {
     footer.style.bottom = "-50px";
   }
-};
+    };
 
-button.addEventListener("click", function () {
-  if (content.style.maxHeight) {
+    button.addEventListener("click", function () {
+    if (content.style.maxHeight) {
     content.style.maxHeight = null;
-  } else {
-    content.style.maxHeight = content.scrollHeight + "px";
-  }
-});
+    } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+    }
+    });
 </script>
 
 </body>
