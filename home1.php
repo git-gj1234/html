@@ -38,6 +38,45 @@ $conn = mysqli_connect($host,$user,$pass,$database);
 if(!$conn){
     die('Could not connect: '.mysqli_connect_error());
 }
+
+function display($retval){
+    echo "<div class=\"flex-container2\">";
+    while($row = mysqli_fetch_assoc($retval)){
+        echo "<div class=\"item\">";
+        echo "<table class = \"gallery\">";
+        echo "<tr class = \"tr\" style=\"height:250px;\" >";
+        echo "<td colspan=\"2\" class=\"tr\">";
+        $link = $row['link'];
+        echo "<img src=$link >";
+        echo "</td>";
+        echo "</tr>";
+        echo "<tr class=\"tr\">";
+        echo "<td colspan=\"2\" class=\"tr\">";
+        echo "<p class = \"elementname\">{$row['Name']}</p>";
+        echo "</td>";
+        echo "</tr>";
+        echo "<tr class=\"tr\">";
+        echo "<td class=\"tr\">";
+        $price = $row['price'];
+        echo "<p class=\"price\">$price</p>";
+        echo "</td>";
+        echo "<td class=\"tr\" >";
+        echo "<input type=\"add\" value=\"+\">";
+        /*echo "<input type=\"add\" value=\"-\">";*/
+        echo "</td>";
+        echo "</tr>";
+        echo "<tr class=\"tr\">";
+        echo "<td colspan=\"2\" class=\"tr\">";
+        $supporting_info = $row['info'];
+        echo "<p class=\"content\">$supporting_info</p>";
+        echo "</td>";
+        echo "</tr>";
+        echo "</table>";
+        echo "</div>";
+    
+    }
+    echo "</div>";
+}
 $sql0 = "SELECT distinct(category) from STORE_INV"; 
 $retval0 = mysqli_query($conn,$sql0);
 
@@ -58,25 +97,7 @@ if(mysqli_num_rows($retval0)>0){
 }
 
 if($_POST && isset($_POST["canned"])){
-    // echo "canned boissss";
-    // echo "canned boissss";
-    // echo "canned boissss";
-    // echo "canned boissss";
-    // echo "canned boissss";
-    // echo "canned boissss";
-    // echo "canned boissss";
-    // echo "canned boissss";
-    // echo "canned boissss";
-    // echo "canned boissss";
-    // echo "canned boissss";
-    // echo "canned boissss";
-    // echo "canned boissss";
-    // echo "canned boissss";
-    // echo "canned boissss";
-    // echo "canned boissss";echo "canned boissss";
-    // echo "canned boissss";
-}
-// echo 'Connected successfully<br>';    
+} 
 
   if($_POST && isset($_POST['search']))
   {
@@ -87,57 +108,24 @@ if($_POST && isset($_POST["canned"])){
         $retval = mysqli_query($conn,$query);
 
 if(mysqli_num_rows($retval)>0){
-    echo "<div class=\"flex-container2\">";
-    while($row = mysqli_fetch_assoc($retval)){
-        echo "<div class=\"item\">";
-        // echo"<p class = \"para\">{$row['Name']}</p><br>";
-        // echo"<hr>";
-        // $link = $row['link'];
-        // echo"<img src=$link class = \"app\">";
-        // echo"<br>";
-        // echo"<hr>";
-        // $supporting_info = $row['info'];
-        // echo"$supporting_info";
-
-
-        echo "<table class = \"gallery\">";
-        echo "<tr class = \"tr\" style=\"height:250px;\" >";
-        echo "<td colspan=\"2\" class=\"tr\">";
-        $link = $row['link'];
-        echo "<img src=$link >";
-        echo "</td>";
-        echo "</tr>";
-        echo "<tr class=\"tr\">";
-        echo "<td colspan=\"2\" class=\"tr\">";
-        echo "<p class = \"elementname\">{$row['Name']}</p>";
-        echo "</td>";
-        echo "</tr>";
-        echo "<tr class=\"tr\">";
-        echo "<td class=\"tr\">";
-        $price = $row['price'];
-        echo "<p class=\"price\">$price</p>";
-        echo "</td>";
-        echo "<td class=\"tr\" >";
-        echo "<input type=\"add\" value=\"+\">";
-        /*echo "<input type=\"add\" value=\"-\">";*/
-        echo "</td>";
-        echo "</tr>";
-        echo "<tr class=\"tr\">";
-        echo "<td colspan=\"2\" class=\"tr\">";
-        $supporting_info = $row['info'];
-        echo "<p class=\"content\">$supporting_info</p>";
-        echo "</td>";
-        echo "</tr>";
-        echo "</table>";
-        echo "</div>";
     
-    }
-    echo "</div>";
+    display($retval);
+    echo "<div class=\"printend\">";
+        echo "<p>END OF SEARCH RESULTS<p>";
+        echo" </div>";
 }
 else{
     echo "<img src = \"images/no_res.png\" align = \"center\">";
     echo "<br><p align = \"center\">we dont seem to offer $value_filter at the moment</p>";
 }
+$sql = "SELECT * from STORE_INV";
+            $retval = mysqli_query($conn,$sql);
+        
+        if(mysqli_num_rows($retval)>0){
+            
+            display($retval);
+        }
+        
 }
 else{
 
@@ -153,113 +141,29 @@ else{
             $sql = "SELECT * from STORE_INV where category = '$v1'";
 $retval = mysqli_query($conn,$sql);
 if(mysqli_num_rows($retval)>0){
-    echo "<div class=\"flex-container2\">";
-    while($row = mysqli_fetch_assoc($retval)){
-        echo "<div class=\"item\">";
-        // echo"<p class = \"para\">{$row['Name']}</p><br>";
-        // echo"<hr>";
-        // $link = $row['link'];
-        // echo"<img src=$link class = \"app\">";
-        // echo"<br>";
-        // echo"<hr>";
-        // $supporting_info = $row['info'];
-        // echo"$supporting_info";
-
-
-        echo "<table class = \"gallery\">";
-        echo "<tr class = \"tr\" style=\"height:250px;\" >";
-        echo "<td colspan=\"2\" class=\"tr\">";
-        $link = $row['link'];
-        echo "<img src=$link >";
-        echo "</td>";
-        echo "</tr>";
-        echo "<tr class=\"tr\">";
-        echo "<td colspan=\"2\" class=\"tr\">";
-        echo "<p class = \"elementname\">{$row['Name']}</p>";
-        echo "</td>";
-        echo "</tr>";
-        echo "<tr class=\"tr\">";
-        echo "<td class=\"tr\">";
-        $price = $row['price'];
-        echo "<p class=\"price\">$price</p>";
-        echo "</td>";
-        echo "<td class=\"tr\" >";
-        echo "<input type=\"add\" value=\"+\">";
-        /*echo "<input type=\"add\" value=\"-\">";*/
-        echo "</td>";
-        echo "</tr>";
-        echo "<tr class=\"tr\">";
-        echo "<td colspan=\"2\" class=\"tr\">";
-        $supporting_info = $row['info'];
-        echo "<p class=\"content\">$supporting_info</p>";
-        echo "</td>";
-        echo "</tr>";
-        echo "</table>";
-        echo "</div>";
     
-    }
-    echo "</div>";
+    display($retval);
+    echo "<div class=\"printend\">";
+        echo "<p>END OF SEARCH RESULTS<p>";
+        echo" </div>";
+
 }
 }
         }
 
-        if(!$r){
+        //if(!$r){
             $sql = "SELECT * from STORE_INV";
-        $retval = mysqli_query($conn,$sql);
+            $retval = mysqli_query($conn,$sql);
         
         if(mysqli_num_rows($retval)>0){
-            echo "<div class=\"flex-container2\">";
-            while($row = mysqli_fetch_assoc($retval)){
-                echo "<div class=\"item\">";
-                // echo"<p class = \"para\">{$row['Name']}</p><br>";
-                // echo"<hr>";
-                // $link = $row['link'];
-                // echo"<img src=$link class = \"app\">";
-                // echo"<br>";
-                // echo"<hr>";
-                // $supporting_info = $row['info'];
-                // echo"$supporting_info";
-        
-        
-                echo "<table class = \"gallery\">";
-                echo "<tr class = \"tr\" style=\"height:250px;\" >";
-                echo "<td colspan=\"2\" class=\"tr\">";
-                $link = $row['link'];
-                echo "<img src=$link >";
-                echo "</td>";
-                echo "</tr>";
-                echo "<tr class=\"tr\">";
-                echo "<td colspan=\"2\" class=\"tr\">";
-                echo "<p class = \"elementname\">{$row['Name']}</p>";
-                echo "</td>";
-                echo "</tr>";
-                echo "<tr class=\"tr\">";
-                echo "<td class=\"tr\">";
-                $price = $row['price'];
-                echo "<p class=\"price\">$price</p>";
-                echo "</td>";
-                echo "<td class=\"tr\" >";
-                echo "<input type=\"add\" value=\"+\">";
-                /*echo "<input type=\"add\" value=\"-\">";*/
-                echo "</td>";
-                echo "</tr>";
-                echo "<tr class=\"tr\">";
-                echo "<td colspan=\"2\" class=\"tr\">";
-                $supporting_info = $row['info'];
-                echo "<p class=\"content\">$supporting_info</p>";
-                echo "</td>";
-                echo "</tr>";
-                echo "</table>";
-                echo "</div>";
             
-            }
-            echo "</div>";
+            display($retval);
         }
         }
 
 
 
-    }
+    
 
 
 

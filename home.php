@@ -95,7 +95,6 @@ mysqli_close($conn);
 ?>
 
 <footer id="footer">
-
 <div id="nav-container">
     <button class="contact" id="nav-button">Contact Us</button>
     <div id="nav-content">
@@ -187,7 +186,9 @@ mysqli_close($conn);
     </div>
   </div>
 </footer>
+
   <script>
+
   const button = document.querySelector("#nav-button");
 const content = document.querySelector("#nav-content");
 const footer = document.getElementById("footer");

@@ -34,7 +34,7 @@ if($_POST && isset($_POST['name'],$_POST['password'],$_POST['email'],$_POST['pho
         
         header("Location: https://localhost/recent/html/login.php");
     }
-    }
+    
     echo'<script>function validate(){alert("procceding to login page");return true;}</script>';
 ?>
 
