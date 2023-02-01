@@ -5,10 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-
+    <script src = 'home.js'></script>
 </head>
+<div id="shift"></div>
 <body>
-<div class = "a1">
+<nav id = "TopRibbon">
+        <img id = 'logo' src="logo.jpeg" alt="">
+        <ul id = "in-line">
+            <li>
+                bruh
+            </li>
+            <li>
+                boizz
+            </li>
+        </ul>
+        <div id="searchBar">
+            <input type="text" >
+            <button>
+                <img src = 'search.png'>
+            </button>
+        </div>
+        
+</nav>
+
+<div id ='slideshow'>
+    <div id="leftB" onclick = 'slideshow(-1)'><</div>
+    <img src="images/b1.jpeg" alt="" class = 'slides' id = 'firstSlide'>
+    <img src="images/b2.jpeg" alt="" class = 'slides'>
+    <img src="images/b3.jpeg" alt="" class = 'slides'>
+    <img src="images/b4.jpeg" alt="" class = 'slides'>
+    <img src="images/b5.jpeg" alt="" class = 'slides'>
+    <div id="rightB" onclick = 'slideshow(+1)'>></div>
+<div>
+
+<!-- <div class = "a1">
         hello
     <img src="images/apple.jpg" class="im">
     hello this is the nav bar
@@ -18,7 +48,7 @@
       <button type="submit" name="btn" id="search-button">Search</button>
     </form>
   </div>
-</div>
+</div> -->
 
 
 <?php 
