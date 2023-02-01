@@ -4,21 +4,40 @@
     <link rel="stylesheet" type="text/css" href = "home1.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
+    <script src = 'home1.js'></script>
 
 </head>
 <body>
-<div class = "a1">
-        hello
-    <img src="images/apple.jpg" class="im">
-    hello this is the nav bar
-    <div id="search-container">
-    <form method="post">
+<nav id = "TopRibbon">
+        <img id = 'logo' src="images/logo.jpg" alt="">
+        <ul id = "in-line">
+            <li>
+                bruh
+            </li>
+            <li>
+                boizz
+            </li>
+        </ul>
+        <div id="searchBar">
+        <form method="post">
       <input type="text" id="search-input" name = "search" value = "<?php if(isset($_POST['search'])) echo htmlspecialchars($_POST['search'])?>" >
-      <button type="submit" name="btn" id="search-button">Search</button>
+      <button type="submit" name="btn" id="search-button"><img src="images/search.png"></button>
     </form>
-  </div>
-</div>
+
+        </div>
+        
+</nav>
+
+<div id ='slideshow'>
+    <div id="leftB" onclick = 'slideshow(-1)'><</div>
+    <img src="images/b1.jpg" alt="" class = 'slides' id = 'firstSlide'>
+    <img src="images/b2.jpg" alt="" class = 'slides'>
+    <img src="images/b3.jpg" alt="" class = 'slides'>
+    <img src="images/b4.jpg" alt="" class = 'slides'>
+    <img src="images/b5.jpg" alt="" class = 'slides'>
+    <div id="rightB" onclick = 'slideshow(+1)'>></div>
+<div>
 
 
 <?php 
@@ -86,9 +105,10 @@ if(mysqli_num_rows($retval0)>0){
     while($row0 = mysqli_fetch_assoc($retval0)){
         echo "<div class=\"categ\">";
         $v0 = $row0['category'];
+        $v2= explode(" ",$v0)[0];
         ?>
         <form method = "post">
-        <input type = "submit" value = <?php echo"'$v0'"?> name = <?php echo "'$v0'"?> >
+        <input type = "submit" value = <?php echo"'$v0'"?> name = <?php echo "'$v2'"?> >
         </form>
         <?php
         echo "</div>";    
@@ -136,12 +156,18 @@ else{
     $retval0 = mysqli_query($conn,$sql0); 
     $r = 0;   
     while($row0 = mysqli_fetch_assoc($retval0)){
+        $v2=$row0['category'];
+        //echo"$v2";
         $v1 = $row0['category'];
+        $v1=explode(" ",$v1)[0];
+        //echo "$v1";
         // echo "$v1";
         if(isset($_POST["$v1"])){
             // echo"ye boiiiiiiii";
             $r = 1;
-            $sql = "SELECT * from STORE_INV where category = '$v1'";
+            
+            $sql = "SELECT * from STORE_INV where category like '$v1%'";
+            
 $retval = mysqli_query($conn,$sql);
 if(mysqli_num_rows($retval)>0){
     
