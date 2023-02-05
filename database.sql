@@ -1,116 +1,76 @@
--- phpMyAdmin SQL Dump
--- version 5.2.0
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Jan 29, 2023 at 01:31 PM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+#drop database store;
+create database STORE;
+use STORE;
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+create table Users(
+	UID int auto_increment primary key,
+    User_name varchar(50),
+    House_no varchar(10),
+    street_building varchar(30),
+    Locality varchar(50),
+    phone_number bigint,
+    email varchar(50),
+    password int
+);
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `store`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `bills`
---
-
-CREATE TABLE `bills` (
-  `OID` int(11) DEFAULT NULL,
-  `PID` varchar(10) DEFAULT NULL,
-  `quan` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Triggers `bills`
---
-DELIMITER $$
-CREATE TRIGGER `reduce_quantity` AFTER INSERT ON `bills` FOR EACH ROW update store_inv 
-set quan = quan-(new.quan)
-where pid = new.PID
-$$
-DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `delivery_boizz`
---
-
-CREATE TABLE `delivery_boizz` (
-  `DID` int(11) NOT NULL,
-  `Delivery_name` varchar(50) DEFAULT NULL,
-  `current_status` varchar(20) DEFAULT NULL,
-  `phone_number` bigint(20) DEFAULT NULL,
-  `License_number` int(11) DEFAULT NULL,
-  `password` int(11) DEFAULT NULL,
-  `aadhaar` bigint(20) DEFAULT NULL
-) ;
-
---
--- Dumping data for table `delivery_boizz`
---
-
-INSERT INTO `delivery_boizz` (`DID`, `Delivery_name`, `current_status`, `phone_number`, `License_number`, `password`, `aadhaar`) VALUES
-(3213, 'slave 1', 'free', 1234567890, 483295, 124623, 45322),
-(3214, 'slave 45', 'on delivery', 1233661190, 483293, 2345642, 78965),
-(3215, 'slave 14', 'on delivery', 1849603925, 483298, 3456, 77899);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `orders`
---
-
-CREATE TABLE `orders` (
-  `OID` int(11) NOT NULL,
-  `UID` int(11) DEFAULT NULL,
-  `DID` int(11) DEFAULT NULL,
-  `current_status` varchar(20) DEFAULT NULL,
-  `Date_of_order` date DEFAULT NULL,
-  `Date_of_delivery` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`OID`, `UID`, `DID`, `current_status`, `Date_of_order`, `Date_of_delivery`) VALUES
-(1221, 1, 3213, 'dispatched', '2022-12-28', '2023-01-05'),
-(1222, 2, 3214, 'delivered', '2022-12-28', '2023-01-03'),
-(1223, 3, 3215, 'dispatched', '2022-12-30', '2023-01-09');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `store_inv`
---
-
+#drop table store_inv;
 CREATE TABLE `store_inv` (
-  `PID` varchar(10) NOT NULL,
+  `PID` varchar(10) NOT NULL primary key,
   `Name` varchar(50) NOT NULL,
-  `quan` int(11) DEFAULT 0,
+  `quan` int DEFAULT 0 check(quan>=0),
   `price` float NOT NULL,
   `category` varchar(20) DEFAULT NULL,
-  `link` varchar(15000) DEFAULT NULL,
+  `link` varchar(50) DEFAULT NULL,
   `info` varchar(50) DEFAULT NULL
 ) ;
 
---
--- Dumping data for table `store_inv`
---
+create table Delivery_boizz(
+	DID int primary key,
+    Delivery_name varchar(50),
+    status varchar(20) default 'active' check (status in ('active','busy','inactive')),
+    phone_number bigint, 
+    License_number int unique,
+    password int,
+    aadhaar bigint   
+);
+
+create table Orders(
+	OID int auto_increment primary key,
+    UID int ,
+    DID int default null,
+    status varchar(20) default 'ordered' check (status in ('ordered','dlivery confirmed','delivered')),    
+    Date_of_order date default null,
+	Date_of_delivery date default null,
+    total double default 0,
+    foreign key (DID) references Delivery_boizz(DID),
+    foreign key (UID) references Users(UID)
+);
+
+#drop table bills;
+create table Bills(
+	OID int,
+    PID varchar(10),
+    quan int,
+    foreign key (OID) references Orders(OID),
+    foreign key (PID) references store_inv(PID)
+);
+
+create table cart(
+  UID int,
+  PID varchar(10),
+  quan int,
+  foreign key (UID) references Users(UID),
+  foreign key (PID) references store_inv(PID)
+);
+
+insert into users values(1,"Adithya",4,"aq1","jpnagar",7818239203,"a@gmail.com",102345);
+insert into users values(2,"Amal",6,"we4","Basvanagudi",2135829032,"am@gmail.com",123456); 
+insert into users values(3,"chetna",9,"cdr5","this locality",3853298567,"c@gmail.com",456246); 
+
+insert into delivery_boizz values(3213,"slave 1","active",1234567890,483295,124623,45322);
+insert into delivery_boizz values(3214,"slave 45","inactive",1233661190,483293,2345642,78965);
+insert into delivery_boizz values(3215,"slave 14","busy",1849603925,483298,3456,77899);
+
 
 INSERT INTO `store_inv` (`PID`, `Name`, `quan`, `price`, `category`, `link`, `info`) VALUES
 ('b01', 'Muffin', 10, 120, 'baked goods', 'images/muffin.jpg\r\n', 'A chocolate muffin for the afternoon'),
@@ -170,109 +130,25 @@ INSERT INTO `store_inv` (`PID`, `Name`, `quan`, `price`, `category`, `link`, `in
 ('v14', 'Turnip(1 kg)', 67, 67, 'vegetables', 'images/turnip.jpg', 'Will it spin like a top?'),
 ('v15', 'Kohlrabi(1 kg)', 56, 45, 'vegetables', 'images/kohlrabi.jpg', 'A big vegetable');
 
--- --------------------------------------------------------
 
---
--- Stand-in structure for view `total`
--- (See below for the actual view)
---
-CREATE TABLE `total` (
-`oid` int(11)
-,`total_amount` double
-);
+create view bill as select bills.oid,bills.pid,bills.quan,bills.quan*store_inv.price from bills,store_inv where bills.pid = store_inv.pid; 
 
--- --------------------------------------------------------
+delimiter |
+create trigger reduce_quantity
+after insert on bills
+for each row
+update store_inv 
+set quan = quan - new.quan
+where pid = new.pid;
+|
+delimiter ;
 
---
--- Table structure for table `users`
---
-
-CREATE TABLE `users` (
-  `UID` int(11) NOT NULL,
-  `User_name` varchar(50) DEFAULT NULL,
-  `House_no` varchar(10) DEFAULT NULL,
-  `street_building` varchar(30) DEFAULT NULL,
-  `Locality` varchar(50) DEFAULT NULL,
-  `phone_number` bigint(20) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  `password` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`UID`, `User_name`, `House_no`, `street_building`, `Locality`, `phone_number`, `email`, `password`) VALUES
-(1, 'Adithya', '4', 'aq1', 'jpnagar', 7818239203, 'a@gmail.com', '102345'),
-(2, 'Amal', '6', 'we4', 'Basvanagudi', 2135829032, 'am@gmail.com', '123456'),
-(3, 'chetna', '9', 'cdr5', 'this locality', 3853298567, 'c@gmail.com', '456246');
-
--- --------------------------------------------------------
-
---
--- Structure for view `total`
---
-DROP TABLE IF EXISTS `total`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `total`  AS SELECT `b`.`OID` AS `oid`, sum(`s`.`price` * `b`.`quan`) AS `total_amount` FROM (`bills` `b` join `store_inv` `s`) WHERE `s`.`PID` = `b`.`PID` GROUP BY `b`.`OID` ORDER BY sum(`s`.`price` * `b`.`quan`) AS `DESCdesc` ASC  ;
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `bills`
---
-ALTER TABLE `bills`
-  ADD KEY `OID` (`OID`),
-  ADD KEY `PID` (`PID`);
-
---
--- Indexes for table `delivery_boizz`
---
-ALTER TABLE `delivery_boizz`
-  ADD PRIMARY KEY (`DID`),
-  ADD UNIQUE KEY `License_number` (`License_number`);
-
---
--- Indexes for table `orders`
---
-ALTER TABLE `orders`
-  ADD PRIMARY KEY (`OID`),
-  ADD KEY `DID` (`DID`),
-  ADD KEY `UID` (`UID`);
-
---
--- Indexes for table `store_inv`
---
-ALTER TABLE `store_inv`
-  ADD PRIMARY KEY (`PID`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`UID`);
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `bills`
---
-ALTER TABLE `bills`
-  ADD CONSTRAINT `bills_ibfk_1` FOREIGN KEY (`OID`) REFERENCES `orders` (`OID`),
-  ADD CONSTRAINT `bills_ibfk_2` FOREIGN KEY (`PID`) REFERENCES `store_inv` (`PID`);
-
---
--- Constraints for table `orders`
---
-ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`DID`) REFERENCES `delivery_boizz` (`DID`),
-  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`UID`) REFERENCES `users` (`UID`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+delimiter |
+create trigger generate_total
+after insert on bills
+for each row
+update orders 
+set total = total + (new.quan*(select price from store_inv where pid = new.pid))
+where oid = new.oid;
+|
+delimiter ;

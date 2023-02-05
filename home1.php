@@ -48,152 +48,152 @@ session_write_close();
 ?>
 
 <?php
-$r=0;
-$host = "localhost";
-$user = "root";
-$pass = "";
-$database = "STORE";
-$conn = mysqli_connect($host,$user,$pass,$database);
-if(!$conn){
-    die('Could not connect: '.mysqli_connect_error());
-}
+    $r=0;
+    $host = "localhost";
+    $user = "root";
+    $pass = "";
+    $database = "STORE";
+    $conn = mysqli_connect($host,$user,$pass,$database);
+    if(!$conn){
+        die('Could not connect: '.mysqli_connect_error());
+    }
 
-function display($retval){
-    echo "<div class=\"flex-container2\">";
-    while($row = mysqli_fetch_assoc($retval)){
-        echo "<div class=\"item\">";
-        echo "<table class = \"gallery\">";
-        echo "<tr class = \"tr\" style=\"height:250px;\" >";
-        echo "<td colspan=\"2\" class=\"tr\">";
-        $link = $row['link'];
-        echo "<img src=$link >";
-        echo "</td>";
-        echo "</tr>";
-        echo "<tr class=\"tr\">";
-        echo "<td colspan=\"2\" class=\"tr\">";
-        echo "<p class = \"elementname\">{$row['Name']}</p>";
-        echo "</td>";
-        echo "</tr>";
-        echo "<tr class=\"tr\">";
-        echo "<td class=\"tr\">";
-        $price = $row['price'];
-        echo "<p class=\"price\">$price</p>";
-        echo "</td>";
-        echo "<td class=\"tr\" >";
-        echo "<input type=\"add\" value=\"+\">";
-        /*echo "<input type=\"add\" value=\"-\">";*/
-        echo "</td>";
-        echo "</tr>";
-        echo "<tr class=\"tr\">";
-        echo "<td colspan=\"2\" class=\"tr\">";
-        $supporting_info = $row['info'];
-        echo "<p class=\"content\">$supporting_info</p>";
-        echo "</td>";
-        echo "</tr>";
-        echo "</table>";
+    function display($retval){
+        echo "<div class=\"flex-container2\">";
+        while($row = mysqli_fetch_assoc($retval)){
+            echo "<div class=\"item\">";
+            echo "<table class = \"gallery\">";
+            echo "<tr class = \"tr\" style=\"height:250px;\" >";
+            echo "<td colspan=\"2\" class=\"tr\">";
+            $link = $row['link'];
+            echo "<img src=$link >";
+            echo "</td>";
+            echo "</tr>";
+            echo "<tr class=\"tr\">";
+            echo "<td colspan=\"2\" class=\"tr\">";
+            echo "<p class = \"elementname\">{$row['Name']}</p>";
+            echo "</td>";
+            echo "</tr>";
+            echo "<tr class=\"tr\">";
+            echo "<td class=\"tr\">";
+            $price = $row['price'];
+            echo "<p class=\"price\">$price</p>";
+            echo "</td>";
+            echo "<td class=\"tr\" >";
+            echo "<input type=\"add\" value=\"+\">";
+            /*echo "<input type=\"add\" value=\"-\">";*/
+            echo "</td>";
+            echo "</tr>";
+            echo "<tr class=\"tr\">";
+            echo "<td colspan=\"2\" class=\"tr\">";
+            $supporting_info = $row['info'];
+            echo "<p class=\"content\">$supporting_info</p>";
+            echo "</td>";
+            echo "</tr>";
+            echo "</table>";
+            echo "</div>";
+        
+        }
         echo "</div>";
-    
     }
-    echo "</div>";
-}
-$sql0 = "SELECT distinct(category) from STORE_INV"; 
-$retval0 = mysqli_query($conn,$sql0);
-
-
-if(mysqli_num_rows($retval0)>0){
-    echo "<div class=\"flex-container\">";
-    while($row0 = mysqli_fetch_assoc($retval0)){
-        echo "<div class=\"categ\">";
-        $v0 = $row0['category'];
-        $v2= explode(" ",$v0)[0];
-        ?>
-        <form method = "post">
-        <input type = "submit" value = <?php echo"'$v0'"?> name = <?php echo "'$v2'"?> >
-        </form>
-        <?php
-        echo "</div>";    
-    }
-    echo "</div>";
-}
-
-if($_POST && isset($_POST["canned"])){
-} 
-
-  if($_POST && isset($_POST['search']))
-  {
-        $value_filter= $_POST['search'];
-        // echo $value_filter;
-
-        $query = "Select * from store_inv where concat(Name) LIKE '%$value_filter%'";
-        $retval = mysqli_query($conn,$query);
-
-if(mysqli_num_rows($retval)>0){
-    
-    display($retval);
-    echo "<div class=\"end-results\">";
-  echo "<img src=\"images/smile.jpg\" alt=\"Grocery basket\">";
-  echo "<p>End of search results</p>";
-echo "</div>";
-}
-else{
-    echo "<div class=\"end-results\">";
-  echo "<img src=\"images/no_res.png\" alt=\"Grocery basket\">";
-  echo "<p>we dont seem to offer $value_filter at the moment</p>";
-  echo "</div>";
-}
-$sql = "SELECT * from STORE_INV";
-            $retval = mysqli_query($conn,$sql);
-        
-        if(mysqli_num_rows($retval)>0){
-            
-            display($retval);
-        }
-        
-}
-else{
-
     $sql0 = "SELECT distinct(category) from STORE_INV"; 
-    $retval0 = mysqli_query($conn,$sql0); 
-    $r = 0;   
-    while($row0 = mysqli_fetch_assoc($retval0)){
-        $v2=$row0['category'];
-        //echo"$v2";
-        $v1 = $row0['category'];
-        $v1=explode(" ",$v1)[0];
-        //echo "$v1";
-        // echo "$v1";
-        if(isset($_POST["$v1"])){
-            // echo"ye boiiiiiiii";
-            $r = 1;
-            
-            $sql = "SELECT * from STORE_INV where category like '$v1%'";
-            
-$retval = mysqli_query($conn,$sql);
-if(mysqli_num_rows($retval)>0){
-    
-    display($retval);
-    echo "<div class=\"end-results\">";
-  echo "<img src=\"images/smile.jpg\" alt=\"Grocery basket\">";
-  echo "<p>End of search results</p>";
-  echo "</div>";
+    $retval0 = mysqli_query($conn,$sql0);
 
-}
-}
+
+    if(mysqli_num_rows($retval0)>0){
+        echo "<div class=\"flex-container\">";
+        while($row0 = mysqli_fetch_assoc($retval0)){
+            echo "<div class=\"categ\">";
+            $v0 = $row0['category'];
+            $v2= explode(" ",$v0)[0];
+            ?>
+            <form method = "post">
+            <input type = "submit" value = <?php echo"'$v0'"?> name = <?php echo "'$v2'"?> >
+            </form>
+            <?php
+            echo "</div>";    
         }
+        echo "</div>";
+    }
 
-        //if(!$r){
-            $sql = "SELECT * from STORE_INV";
-            $retval = mysqli_query($conn,$sql);
+    if($_POST && isset($_POST["canned"])){
+    } 
+
+    if($_POST && isset($_POST['search']))
+    {
+            $value_filter= $_POST['search'];
+            // echo $value_filter;
+
+            $query = "Select * from store_inv where concat(Name) LIKE '%$value_filter%'";
+            $retval = mysqli_query($conn,$query);
+
+    if(mysqli_num_rows($retval)>0){
         
-        if(mysqli_num_rows($retval)>0){
+        display($retval);
+        echo "<div class=\"end-results\">";
+    echo "<img src=\"images/smile.jpg\" alt=\"Grocery basket\">";
+    echo "<p>End of search results</p>";
+    echo "</div>";
+    }
+    else{
+        echo "<div class=\"end-results\">";
+    echo "<img src=\"images/no_res.png\" alt=\"Grocery basket\">";
+    echo "<p>we dont seem to offer $value_filter at the moment</p>";
+    echo "</div>";
+    }
+    $sql = "SELECT * from STORE_INV";
+                $retval = mysqli_query($conn,$sql);
             
-            display($retval);
-        }
-        }
+            if(mysqli_num_rows($retval)>0){
+                
+                display($retval);
+            }
+            
+    }
+    else{
+
+        $sql0 = "SELECT distinct(category) from STORE_INV"; 
+        $retval0 = mysqli_query($conn,$sql0); 
+        $r = 0;   
+        while($row0 = mysqli_fetch_assoc($retval0)){
+            $v2=$row0['category'];
+            //echo"$v2";
+            $v1 = $row0['category'];
+            $v1=explode(" ",$v1)[0];
+            //echo "$v1";
+            // echo "$v1";
+            if(isset($_POST["$v1"])){
+                // echo"ye boiiiiiiii";
+                $r = 1;
+                
+                $sql = "SELECT * from STORE_INV where category like '$v1%'";
+                
+    $retval = mysqli_query($conn,$sql);
+    if(mysqli_num_rows($retval)>0){
+        
+        display($retval);
+        echo "<div class=\"end-results\">";
+    echo "<img src=\"images/smile.jpg\" alt=\"Grocery basket\">";
+    echo "<p>End of search results</p>";
+    echo "</div>";
+
+    }
+    }
+            }
+
+            //if(!$r){
+                $sql = "SELECT * from STORE_INV";
+                $retval = mysqli_query($conn,$sql);
+            
+            if(mysqli_num_rows($retval)>0){
+                
+                display($retval);
+            }
+            }
 
 
 
-    
+        
 
 
 
@@ -201,7 +201,7 @@ if(mysqli_num_rows($retval)>0){
 
 
 
-    mysqli_close($conn);
+        mysqli_close($conn);
 ?>
 
 <footer id="footer">
